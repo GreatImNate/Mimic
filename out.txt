@@ -1,0 +1,170 @@
+How :: WRB
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+0
+can :: MD
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+1
+Ted :: VB
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+2
+can Ted
+Cruz :: NNP
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+3
+Ted Cruz
+be :: VB
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+4
+Cruz be
+an :: DT
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+5
+be an
+Evangelical :: JJ
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+6
+an Evangelical
+Christian :: NN
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+7
+Evangelical Christian
+when :: WRB
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+8
+Christian when
+he :: PRP
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+9
+when he
+lies :: VBZ
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+10
+he lies
+so :: RB
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+11
+lies so
+much :: JJ
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+12
+so much
+and :: CC
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+13
+much and
+is :: VBZ
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+14
+and is
+so :: RB
+dishonest :: JJ
+Reach this statement
+['How', 'can', 'Ted', 'Cruz', 'be', 'an', 'Evangelical', 'Christian', 'when', 'he', 'lies', 'so', 'much', 'and', 'is', 'so', 'dishonest']
+16
+so dishonest
+? :: .
+WRB-MD-VB-NNP-VB-DT-JJ-NN-WRB-PRP-VBZ-RB-JJ-CC-VBZ-RB-JJ-.-
+{'is': 1, 'Evangelical': 1, 'dishonest': 1, 'an': 1, 'be': 1, 'when': 1, 'can': 1, 'so': 2, 'Cruz': 1, 'How': 1, 'Ted': 1, 'and': 1, 'Christian': 1, '?': 1, 'lies': 1, 'he': 1, 'much': 1}
+{'WRB-MD-VB-NNP-VB-DT-JJ-NN-WRB-PRP-VBZ-RB-JJ-CC-VBZ-RB-JJ-.-': <__main__.Grammer object at 0x0000025F350E3AC8>}
+The :: DT
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+0
+concept :: NN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+1
+of :: IN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+2
+concept of
+global :: JJ
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+3
+of global
+warming :: NN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+4
+global warming
+was :: VBD
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+5
+warming was
+created :: VBN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+6
+was created
+by :: IN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+7
+created by
+and :: CC
+for :: IN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+9
+and for
+the :: DT
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+10
+for the
+Chinese :: NNPS
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+11
+the Chinese
+in :: IN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+12
+Chinese in
+order :: NN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+13
+in order
+to :: TO
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+14
+order to
+make :: VB
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+15
+to make
+U.S. :: NNP
+manufacturing :: NN
+Reach this statement
+['The', 'concept', 'of', 'global', 'warming', 'was', 'created', 'by', 'and', 'for', 'the', 'Chinese', 'in', 'order', 'to', 'make', 'US', 'manufacturing', 'noncompetitive']
+17
+US manufacturing
+non-competitive :: JJ
+. :: .
+DT-NN-IN-JJ-NN-VBD-VBN-IN-CC-IN-DT-NNPS-IN-NN-TO-VB-NNP-NN-JJ-.-
+{'non-competitive': 1, 'for': 1, 'created': 1, 'be': 1, '.': 1, 'concept': 1, 'so': 2, 'in': 1, 'Cruz': 1, 'How': 1, 'and': 2, 'Christian': 1, 'order': 1, 'by': 1, 'the': 1, 'manufacturing': 1, 'lies': 1, 'make': 1, 'was': 1, 'is': 1, 'much': 1, 'dishonest': 1, 'warming': 1, 'an': 1, 'when': 1, 'can': 1, 'Chinese': 1, 'Evangelical': 1, 'Ted': 1, 'The': 1, 'of': 1, 'to': 1, 'U.S.': 1, 'he': 1, 'global': 1, '?': 1}
+TRUE VBD
+TRUE VBN
+{'DT-NN-IN-JJ-NN-VBD-VBN-IN-CC-IN-DT-NNPS-IN-NN-TO-VB-NNP-NN-JJ-.-': <__main__.Grammer object at 0x0000025F34B02A90>, 'WRB-MD-VB-NNP-VB-DT-JJ-NN-WRB-PRP-VBZ-RB-JJ-CC-VBZ-RB-JJ-.-': <__main__.Grammer object at 0x0000025F350E3AC8>}
