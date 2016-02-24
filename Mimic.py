@@ -1,6 +1,7 @@
 import re
 import nltk
 import sys
+import operator
 
 class Grammer:
 
@@ -47,14 +48,13 @@ class Words():
 
 class mimic():
 	def __init__(self):
-		self.struct = {}
+		self.struct = {} #Dictionary of the structures used and the number of times it has been seen
 		self.words_seen = {}
 		self.most_prob_noun = []
 		self.word_count = 0 #Want to have a general count of every word in the corpus to find the probabilities of certain words.
-		self.feature_matrix = []
 		self.tense_count = 0
 		self.avg_len = 0 #for average length, when updating, keep track of how many structures have been seen, and then multiply average by that then add by the new val and divide by the new total
-		
+		self.total_read = 0
 
 	def readin(self):
 		file_name = sys.argv[1]
@@ -93,6 +93,8 @@ class mimic():
 		else:
 			self.define_grammer(store_sentance)
 		print(self.struct)
+		self.total_read +=1
+		print(self.total_read)
 	
 	def define_grammer(self,s):
 		"""
@@ -200,8 +202,14 @@ class mimic():
 
 		return val
 
-		def generate_trumpism():
-			pass
+		def generate_trumpism(self,code):
+			"""Different codes will corespond to different topics that could be talked about
+				Codes: 0 = Random :: 1 = America :: 2 = China :: 
+			"""
+			most_used_struct = sorted(self.struct.items(), key = operator.itemgetter(1))
+			most_used_words = sorted(self.words_seen.items(),key=operator.itemgetter(1))
+			trump_string = ""
+			
 
 def main():
 	test = mimic()
