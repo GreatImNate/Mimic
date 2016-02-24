@@ -160,15 +160,28 @@ class mimic():
 		"""
 		pos_lex = ('great','good')
 		neg_lex = ('disappoint','lie')
-		val = 0
+		no_lex = ('no','not','never')
+		#These words will flip the value 
+		pos_val = 0
+		neg_val = 0
+		for i in s:
+		#I see a subjective word and naively add or subtract, next four steps will change this approach so its not so naive.
+			ind = s.index(i)
+			if (s in pos_lex):
+				pos_val += 1
+			if (s in neg_lex):
+				neg_val += -1
+		#Negations -- if there is a negation (no,not,etc) and is followed by a subjective word, will look at last 4 words
+			if(index-4 < 0):
 
-		#Negations -- if there is a negation (no,not,etc) and is followed
-
+		#modifiers -- presence of words like very, super, extremely
+		
 		#Polarity shift -- Expressing and opinion (pos/neg) then flip
 
 		#Subject opinion -- how does the speaker feel about the subject and nouns in the current sentance, this will be pulled from the dict
 		
-		#modifiers -- presence of words like very, super, extremely
+		
+
 		return val
 
 		def generate_trumpism():
