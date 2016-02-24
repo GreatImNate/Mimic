@@ -147,7 +147,7 @@ class mimic():
 			v = temp.before[prior]
 			temp.before[prior] = v+1
 		else:
-			temp[before] = 0
+			temp.before[prior] = 0
 		#temp.before =  #Dictionaries with the words and their frequencies for both before and after
 		#temp.after = 
 		temp.word_type = [] #Will be a list because a word can be used in different ways
@@ -165,20 +165,36 @@ class mimic():
 		pos_val = 0
 		neg_val = 0
 		for i in s:
+			subj_seen_pos = False
+			subj_seen_neg = False
 		#I see a subjective word and naively add or subtract, next four steps will change this approach so its not so naive.
 			ind = s.index(i)
 			if (s in pos_lex):
 				pos_val += 1
+				subj_seen_pos = True
 			if (s in neg_lex):
 				neg_val += -1
-		#Negations -- if there is a negation (no,not,etc) and is followed by a subjective word, will look at last 4 words
-			if(index-4 < 0):
+				subj_seen_neg = True
+		#Negations -- if there is a negation (no,not,etc) and is followed by a subjective word, will look at last 4 words and next 1
+			prev = []
+			if(subj_seen_pos or subj_seen_neg and ind-4 < 0):
+				prev = s[:ind]
+				prev.append(s[ind+1])
+			elif(subj_seen):
+				prev = s[ind-4:ind]
+				prev.append(s[ind+1])
+			for no in prev:
+				if(no in no_lex and subj_seen_pos):
+					pos_val -= 1;
+				elif(no in no_lex and subj_seen_neg):
+					neg_val -= 1
 
 		#modifiers -- presence of words like very, super, extremely
 		
 		#Polarity shift -- Expressing and opinion (pos/neg) then flip
 
 		#Subject opinion -- how does the speaker feel about the subject and nouns in the current sentance, this will be pulled from the dict
+		#Will innfluence the final score that is output, and the final score will eventually 
 		
 		
 
@@ -190,7 +206,6 @@ class mimic():
 def main():
 	test = mimic()
 	test.readin()
-	test.construct_vector()
 	
 if __name__ == '__main__':
 	main()
