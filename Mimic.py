@@ -49,6 +49,7 @@ class Words():
 class mimic():
 	def __init__(self):
 		self.struct = {} #Dictionary of the structures used and the number of times it has been seen
+		self.struct_size = {}
 		self.words_seen = {}
 		self.most_prob_noun = []
 		self.word_count = 0 #Want to have a general count of every word in the corpus to find the probabilities of certain words.
@@ -59,40 +60,48 @@ class mimic():
 	def readin(self):
 		file_name = sys.argv[1]
 		"""Read in a file with the with command and then pass it line by line into parse_sentance"""
-		with open(file_name) as f:
+		with open(file_name, encoding='utf-8') as f:
 			for line in f:
-				self.parse_sentance(line)
+				sentances = line.split(".")
+				for sent in sentances:
+					self.parse_sentance(sent)
 
 	def parse_sentance(self,s):
 		#Create the dictionary of Words with their respective parts of speech
 		sentance = s
+		sentance = re.sub(r'[^A-Za-z ]','',sentance)
 		tokens =  nltk.word_tokenize(sentance)
 		pos = nltk.pos_tag(tokens)
 		store_sentance = "" #Stores the structure of the sentance
 		#Key is the word and val is its grammaical identification
+		print("The nltk tokens \n{}".format(pos))
 		for key,val in pos:
 			store_sentance += val + "-"
 			print(key + " :: " + val)
 			if key in self.words_seen:
+				print("Has been seen before")
 				temp = self.words_seen[key]
 				self.words_seen[key] = temp+1
 
 
 			else:
+				print("First time seen")
 				self.words_seen[key] = 1
-				word_only = re.sub(r'[^A-Za-z ]','',sentance)
+				#word_only = re.sub(r'[^A-Za-z ]','',sentance)
 				if(key.isalpha()):
-					print("Reach this statement")
-					self.define_word(key,word_only)
+					#print("Reach this statement")
+					self.define_word(key,sentance)
 				# -- will go here when the word is first seen and fill out all its
 		print(store_sentance)
 		print(self.words_seen)
 		#need to implement an if statement to see if the grammer struct has been seen before, though much more unlikely than words, it is still possible
 		if (store_sentance in self.struct):
+			key = self.struct[store_sentance] 
+			self.struct[store_sentance] = key+1
 			pass
 		else:
+			self.struct[store_sentance] = 1
 			self.define_grammer(store_sentance)
-		print(self.struct)
 		self.total_read +=1
 		print(self.total_read)
 	
@@ -118,20 +127,21 @@ class mimic():
 
 		#mod statement - person
 
-		self.struct[s] = temp
-		pass
+		#self.struct[s] = temp
+		
 
-	def define_word(self,w,s):
+	def define_word(self,key_word,s):
 		"""
 		Set all the parameters for a word once it is first seen,
 		Takes in the word that I want to make the instance of and
 		"""
 		temp = Words()
 		#s = re.sub(r'[^A-Za-z ]','',s)
-		temp.word = w
+		temp.word = key_word
 		sp = s.split(" ")
+		print("The split sentance that the key appears in")
 		print(sp)
-		index = sp.index(w)
+		index = sp.index(key_word)
 		print(index)
 		bi = ""
 		if(index>=2):
@@ -202,18 +212,23 @@ class mimic():
 
 		return val
 
-		def generate_trumpism(self,code):
-			"""Different codes will corespond to different topics that could be talked about
-				Codes: 0 = Random :: 1 = America :: 2 = China :: 
-			"""
-			most_used_struct = sorted(self.struct.items(), key = operator.itemgetter(1))
-			most_used_words = sorted(self.words_seen.items(),key=operator.itemgetter(1))
-			trump_string = ""
+	def generate_trumpism(self):#self,code=0,noise=0):
+		"""Different codes will corespond to different topics that could be talked about
+			Codes: 0 = Random :: 1 = America :: 2 = China :: 
+		"""
+		most_used_struct = sorted(self.struct.items(), key = operator.itemgetter(1))
+		most_used_words = sorted(self.words_seen.items(),key=operator.itemgetter(1))
+		print(self.struct)
+		print("This is the most used structs")
+		print(most_used_struct)
+		trump_string = ""
+
 			
 
 def main():
 	test = mimic()
 	test.readin()
+	test.generate_trumpism()
 	
 if __name__ == '__main__':
 	main()
