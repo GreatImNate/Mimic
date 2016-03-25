@@ -2,6 +2,7 @@ import re
 import nltk
 import sys
 import operator
+import random as r
 
 class Grammer:
 
@@ -20,6 +21,11 @@ class Grammer:
 		print(self.length)
 		print(self.tense)
 		print(self.person)
+
+	def generalize(self):
+		pass
+	def format_file_out(self):
+		pass
 
 
 class Words():
@@ -45,12 +51,19 @@ class Words():
 		print(self.after)
 		print(self.word_type)
 		print(self.emote)
+	def format_file_out(self):
+		pass
 
 class mimic():
 	def __init__(self):
 		self.struct = {} #Dictionary of the structures used and the number of times it has been seen
+		
 		self.struct_size = {}
-		self.words_seen = {}
+		self.words_seen = {} #Only keeps track of the number of times 
+		#these two dictionaries will be what will store the information for the word/grammer
+		self.word_def = {} 
+		self.struct_def = {}
+
 		self.most_prob_noun = []
 		self.word_count = 0 #Want to have a general count of every word in the corpus to find the probabilities of certain words.
 		self.tense_count = 0
@@ -62,7 +75,7 @@ class mimic():
 		"""Read in a file with the with command and then pass it line by line into parse_sentance"""
 		with open(file_name, encoding='utf-8') as f:
 			for line in f:
-				sentances = line.split(".")
+				sentances = re.split('[.?!]', line)
 				for sent in sentances:
 					self.parse_sentance(sent)
 
@@ -73,37 +86,37 @@ class mimic():
 		tokens =  nltk.word_tokenize(sentance)
 		pos = nltk.pos_tag(tokens)
 		store_sentance = "" #Stores the structure of the sentance
+		"""First block deals with the individual words
+		"""
 		#Key is the word and val is its grammaical identification
-		print("The nltk tokens \n{}".format(pos))
 		for key,val in pos:
 			store_sentance += val + "-"
-			print(key + " :: " + val)
+			tag = pos[tokens.index(key)][1]
 			if key in self.words_seen:
-				print("Has been seen before")
+				#print("Has been seen before")
 				temp = self.words_seen[key]
 				self.words_seen[key] = temp+1
-
-
 			else:
-				print("First time seen")
+				#print("First time seen")
 				self.words_seen[key] = 1
 				#word_only = re.sub(r'[^A-Za-z ]','',sentance)
 				if(key.isalpha()):
+
 					#print("Reach this statement")
-					self.define_word(key,sentance)
-				# -- will go here when the word is first seen and fill out all its
-		print(store_sentance)
-		print(self.words_seen)
-		#need to implement an if statement to see if the grammer struct has been seen before, though much more unlikely than words, it is still possible
-		if (store_sentance in self.struct):
-			key = self.struct[store_sentance] 
-			self.struct[store_sentance] = key+1
+					self.word_def[key] = self.define_word(key,sentance,tag)
+		"""This second block deals with the grammatical structure
+		"""
+		key_len = len(store_sentance.split("-"))
+		print(store_sentance.split("-"))
+		if (key_len in self.struct):
+			key = self.struct[key_len] 
+			self.struct[key_len] = key+1
 			pass
 		else:
-			self.struct[store_sentance] = 1
-			self.define_grammer(store_sentance)
+			self.struct[key_len] = 1
+			self.struct_def[store_sentance] = self.define_grammer(store_sentance)
 		self.total_read +=1
-		print(self.total_read)
+		#print(self.total_read)
 	
 	def define_grammer(self,s):
 		"""
@@ -114,23 +127,23 @@ class mimic():
 		#mod statement - structure
 		temp.structure = s
 		rem = s.split("-")
-		rem.remove('')
+		#rem.remove('')
 		#mod statement - length
 		temp.length = len(rem)
 		#mod statement - tense
 		for x in rem:
 			if("VBN" in x ) or ("VBD" in x):
-				print("TRUE" + " " + x)
+				#print("TRUE" + " " + x)
 				temp.tense.append("PAST")
 			if("will" in x):
 				temp.tense.append("FUTURE")
 
 		#mod statement - person
 
-		#self.struct[s] = temp
+		return temp
 		
 
-	def define_word(self,key_word,s):
+	def define_word(self,key_word,s,tag):
 		"""
 		Set all the parameters for a word once it is first seen,
 		Takes in the word that I want to make the instance of and
@@ -139,14 +152,14 @@ class mimic():
 		#s = re.sub(r'[^A-Za-z ]','',s)
 		temp.word = key_word
 		sp = s.split(" ")
-		print("The split sentance that the key appears in")
-		print(sp)
+		#print("The split sentance that the key appears in")
+		#print(sp)
 		index = sp.index(key_word)
-		print(index)
+		#print(index)
 		bi = ""
 		if(index>=2):
 			bi = sp[index-1]+" "+ sp[index]
-			print(bi)
+			#print(bi)
 		if(bi in temp.bigram):
 			val = temp.bigram[bi]
 			temp.bigram[bi] = val+1
@@ -162,7 +175,7 @@ class mimic():
 			temp.before[prior] = 0
 		#temp.before =  #Dictionaries with the words and their frequencies for both before and after
 		#temp.after = 
-		temp.word_type = [] #Will be a list because a word can be used in different ways
+		temp.word_type.append(tag) #Will be a list because a word can be used in different ways
 		temp.emote = 0
 		return temp
 
@@ -211,17 +224,47 @@ class mimic():
 		
 
 		return val
+	
+	def generate_word_type_lists():
+		pass
 
 	def generate_trumpism(self):#self,code=0,noise=0):
 		"""Different codes will corespond to different topics that could be talked about
 			Codes: 0 = Random :: 1 = America :: 2 = China :: 
 		"""
+		del self.struct[1]
 		most_used_struct = sorted(self.struct.items(), key = operator.itemgetter(1))
 		most_used_words = sorted(self.words_seen.items(),key=operator.itemgetter(1))
 		print(self.struct)
 		print("This is the most used structs")
 		print(most_used_struct)
+		print("These are the most used words")
+		most_used_words = most_used_words#.reverse()
+		print(most_used_words)
 		trump_string = ""
+		#naive first attempt, will not be what I want, just for fun and proof of concept
+		#change this from a random choice to a probability distribution
+		struct_size_choice = most_used_struct[r.randint(0,len(most_used_struct)-1)][0]
+		print(struct_size_choice)
+		chosen_len = 0
+		temp_struct = None
+		i = 0
+		while chosen_len != struct_size_choice:
+			rand_key = r.choice(list(self.struct_def.keys()))
+			temp_struct = self.struct_def[rand_key]
+			chosen_len = temp_struct.length
+			print(temp_struct.length)
+		print(temp_struct.structure)
+		pos_list = temp_struct.structure.split("-")
+		print(pos_list)
+		current_pos = None
+		for loc in pos_list:
+			while current_pos != loc:
+				#This loop will assign the most probable words to the positions needed.
+				print(loc)
+				break
+				pass
+
 
 			
 
