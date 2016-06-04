@@ -1,5 +1,6 @@
 import re
 import nltk
+import numpy as np
 import sys
 import operator
 import random as r
@@ -41,7 +42,9 @@ class Words():
 		self.bigram = {}
 		self.before = {} #Dictionaries with the words and their frequencies for both before and after
 		self.after = {}
-		self.word_type = [] #Will be a list because a word can be used in different ways
+		self.word_type = np.zeros(37) #Will be a list because a word can be used in different ways
+		#word_type = [CC,CD,DT,EX,FW,IN,JJ,JJR,JJS,LS,MD,NN,NNP,NNPS,NNS,PDT,POS,PRP,PRP$,RB,RBR,RBS,RP,SYM,TO,UH,VB,VBD,VBG,VBN,VBP,VBZ,WDT,WP,WP$,WRB]
+		#each word will have a row that will fit into a matrix of words and their types
 		self.emote = 0 #Will be a float ranging from -1 to 1 where 0 is neutral, -1 is negative and 1 is positive
 
 	def print_all(self):
@@ -60,6 +63,7 @@ class mimic():
 		
 		self.struct_size = {}
 		self.words_seen = {} #Only keeps track of the number of times 
+		
 		#these two dictionaries will be what will store the information for the word/grammer
 		self.word_def = {} 
 		self.struct_def = {}
@@ -173,9 +177,9 @@ class mimic():
 			temp.before[prior] = v+1
 		else:
 			temp.before[prior] = 0
+		self.word_type_list(temp,tag)
 		#temp.before =  #Dictionaries with the words and their frequencies for both before and after
-		#temp.after = 
-		temp.word_type.append(tag) #Will be a list because a word can be used in different ways
+		#temp.word_type.append(tag) #Will be a list because a word can be used in different ways
 		temp.emote = 0
 		return temp
 
@@ -225,27 +229,105 @@ class mimic():
 
 		return val
 	
-	def generate_word_type_lists():
-		pass
-
-	def generate_trumpism(self):#self,code=0,noise=0):
+	def word_type_list(self,W,tag):
+		"""
+		Pass in a word object, and the tag that was just seen with that word in the parsing stage and increment that point in the row for that word
+		"""
+		if(tag == "CC"):
+			W.word_type[0] += 1
+		elif(tag == "CD"):
+			W.word_type[1] += 1
+		elif(tag == "DT"):
+			W.word_type[2] += 1
+		elif(tag == "EX"):
+			W.word_type[3] += 1
+		elif(tag == "FW"):
+			W.word_type[4] += 1
+		elif(tag == "IN"):
+			W.word_type[5] += 1
+		elif(tag == "JJ"):
+			W.word_type[6] += 1
+		elif(tag == "JJR"):
+			W.word_type[7] += 1
+		elif(tag == "JJS"):
+			W.word_type[8] += 1
+		elif(tag == "LS"):
+			W.word_type[9] += 1
+		elif(tag == "MD"):
+			W.word_type[10] += 1
+		elif(tag == "NN"):
+			W.word_type[11] += 1
+		elif(tag == "NNP"):
+			W.word_type[12] += 1
+		elif(tag == "NNPS"):
+			W.word_type[13] += 1
+		elif(tag == "NNS"):
+			W.word_type[14] += 1
+		elif(tag == "PDT"):
+			W.word_type[15] += 1
+		elif(tag == "POS"):
+			W.word_type[16] += 1
+		elif(tag == "PRP"):
+			W.word_type[17] += 1
+		elif(tag == "PRP$"):
+			W.word_type[18] += 1
+		elif(tag == "RB"):
+			W.word_type[19] += 1
+		elif(tag == "RBR"):
+			W.word_type[20] += 1
+		elif(tag == "RBS"):
+			W.word_type[21] += 1
+		elif(tag == "RP"):
+			W.word_type[22] += 1
+		elif(tag == "SYM"):
+			W.word_type[23] += 1
+		elif(tag == "TO"):
+			W.word_type[24] += 1
+		elif(tag == "UH"):
+			W.word_type[25] += 1
+		elif(tag == "VB"):
+			W.word_type[26] += 1
+		elif(tag == "VBD"):
+			W.word_type[27] += 1
+		elif(tag == "VBG"):
+			W.word_type[28] += 1
+		elif(tag == "VBN"):
+			W.word_type[29] += 1
+		elif(tag == "VBP"):
+			W.word_type[31] += 1
+		elif(tag == "VBZ"):
+			W.word_type[32] += 1
+		elif(tag == "WDT"):
+			W.word_type[33] += 1
+		elif(tag == "WP"):
+			W.word_type[34] += 1
+		elif(tag == "WP$"):
+			W.word_type[35] += 1
+		elif(tag == "WRB"):
+			W.word_type[36] += 1
+		
+	def generate_mimic(self):#self,code=0,noise=0):
 		"""Different codes will corespond to different topics that could be talked about
 			Codes: 0 = Random :: 1 = America :: 2 = China :: 
 		"""
-		del self.struct[1]
+		if 1 in self.struct:
+			del self.struct[1]
 		most_used_struct = sorted(self.struct.items(), key = operator.itemgetter(1))
 		most_used_words = sorted(self.words_seen.items(),key=operator.itemgetter(1))
-		print(self.struct)
-		print("This is the most used structs")
-		print(most_used_struct)
-		print("These are the most used words")
 		most_used_words = most_used_words#.reverse()
 		print(most_used_words)
-		trump_string = ""
+		mimic_string = ""
 		#naive first attempt, will not be what I want, just for fun and proof of concept
 		#change this from a random choice to a probability distribution
 		struct_size_choice = most_used_struct[r.randint(0,len(most_used_struct)-1)][0]
 		print(struct_size_choice)
+		type_mat = []
+		word_list_for_random = []
+		for w in most_used_words:
+			print(w)
+			print(self.word_def[w[0]].word_type)
+			word_list_for_random.append(w[0])
+			type_mat.append(self.word_def[w[0]].word_type)
 		chosen_len = 0
 		temp_struct = None
 		i = 0
@@ -257,13 +339,32 @@ class mimic():
 		print(temp_struct.structure)
 		pos_list = temp_struct.structure.split("-")
 		print(pos_list)
-		current_pos = None
+		pos_list.pop()
+		current_pos = 0
 		for loc in pos_list:
-			while current_pos != loc:
+			tmp = Words()
+			print(loc)
+			self.word_type_list(tmp,loc)
+			loc_arr = tmp.word_type
+			rand_word = ''
+			print("Array of current term :: \n {}".format(loc_arr))
+			while current_pos == 0:
 				#This loop will assign the most probable words to the positions needed.
-				print(loc)
-				break
-				pass
+				#Use latent semantic indexing to group words by its type?
+
+				#Rando just to see if I can slot fill
+				rand_word = word_list_for_random[r.randint(0,len(self.word_def)-1)]
+				#print(rand_word)
+				current_pos = self.word_def[rand_word].word_type
+				
+				current_pos = np.dot(current_pos,loc_arr)
+				#print(current_pos)
+			print("Matching word/loc found! {}".format(rand_word))
+			mimic_string += rand_word + " "
+			current_pos = 0
+		return mimic_string
+
+				
 
 
 			
@@ -271,7 +372,10 @@ class mimic():
 def main():
 	test = mimic()
 	test.readin()
-	test.generate_trumpism()
-	
+	cont = 'y'
+	while cont == 'y':
+		mimTest = test.generate_mimic()
+		print(mimTest)
+		cont = input("Generate Another [y]/n\n")
 if __name__ == '__main__':
 	main()
