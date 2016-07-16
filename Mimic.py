@@ -4,6 +4,7 @@ import numpy as np
 import sys
 import operator
 import random as r
+from multiprocessing import Pool
 
 class Grammer:
 
@@ -80,8 +81,9 @@ class mimic():
 		with open(file_name, encoding='utf-8') as f:
 			for line in f:
 				sentances = re.split('[.?!]', line)
-				for sent in sentances:
-					self.parse_sentance(sent)
+				pool = Pool(3)
+				#for sent in sentances:
+				pool.map(self.parse_sentance,sentances)#(sent)
 
 	def parse_sentance(self,s):
 		#Create the dictionary of Words with their respective parts of speech
@@ -366,7 +368,20 @@ class mimic():
 
 				
 
+"""
+Next step:
+Priority #1: Replace the random insertion into the fields with a probabalistic model
+Considerations:
+	Calc probability using bayes? P(word)*P(following word)*what else?
+	Maybe have probability that the word is used in the same attitude as the words around it using the sentiment analysis
+	How do I pull the most probable word from a distribution? Should there be a little bit of noise so that the top word isn't chosen every time?
+	Potentially Use log functions for the probabilities as they are most likely going to be very small
+	Other factors in choosing word:
+		Does it align with the current loc I am looking for 
+			Might use SVD so that I don't have to get all the exact same, though there is a risk that the arrays are too sparse, don't know how much of a problem that is.
 
+Priority #2: Actually implement the sentiment analysis
+"""
 			
 
 def main():
